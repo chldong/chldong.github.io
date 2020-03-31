@@ -1,8 +1,10 @@
 source "https://rubygems.org"
 
-gem 'github-pages'
+require 'json'
+require 'open-uri'
+versions = JSON.parse(open('https://pages.github.com/versions.json').read)
 
-gem "jekyll", "~> 3.5"
+gem "jekyll", "~> 4.0"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.5"
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
@@ -10,7 +12,7 @@ gem "minima", "~> 2.5"
 # gem "github-pages", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
+  gem "jekyll-feed", "~> 0.11"
   gem "jekyll-seo-tag"
 end
 
@@ -19,6 +21,7 @@ end
 install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
   gem "tzinfo", "~> 1.2"
   gem "tzinfo-data"
+#  gem "github-pages"
 end
 
 # Performance-booster for watching directories on Windows
