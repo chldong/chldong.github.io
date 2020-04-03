@@ -1,2 +1,1 @@
-测试使用Jekyll创建静态博客
-http://chldong.github.io
+[你的答案](http://chldong.github.io)博客系统已经正式启用
