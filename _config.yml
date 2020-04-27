@@ -1,8 +1,8 @@
 title: 你的答案
-email: chldong@163.com
+email: cuihailiang@gmail.com
 description: 这里就是你的答案
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://your.worldeyes.cn" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: chldong
 github_username:  chldong
 
