@@ -23,11 +23,6 @@ Docker Swarm 模式则是同 Docker-Compose 在本地使用的相同格式的文
 
 您无需安装其他任何东西。
 
-* 注意
-```
-当您在这里看到 “Docker Swarm” 时，我们实际上是在谈论 “Docker Swarm 模式” 。
-```
-
 ## 备选方案
 
 类似的替代方案还有：
@@ -39,7 +34,7 @@ Docker Swarm 模式则是同 Docker-Compose 在本地使用的相同格式的文
 
 ## 关于 Docker Swarm 模式
 
-Docker Swarm 模式可与[上述备选方案]相媲美。
+Docker Swarm 模式可与`上述备选方案`相媲美。
 
 但是，此模式，更适合少于 200 名开发人员的团队或少于 1000 台机器的集群。
 
@@ -93,7 +88,7 @@ export USE_HOSTNAME=dog.example.com
 echo $USE_HOSTNAME > /etc/hostname
 hostname -F /etc/hostname
 ```
-[注意：]如果您不是root用户，则可能需要添加sudo到这些命令中。当您没有足够的权限时，shell 会告诉您。[请注意，]sudo默认情况下不保留环境变量，但这可以通过-E标志启用。
+`注意：`如果您不是root用户，则可能需要添加sudo到这些命令中。当您没有足够的权限时，shell 会告诉您。`请注意，` sudo 默认情况下不保留环境变量，但这可以通过 -E 标志启用。
 
 * 更新包：
 ```s
@@ -124,7 +119,7 @@ rm get-docker.sh
 ```s
 docker swarm init
 ```
-[注意：]如果您看到如下错误：
+`注意：`如果您看到如下错误：
 ```
 Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on interface eth0 (138.68.58.48 and 10.19.0.5) - specify one with --advertise-addr
 ```
@@ -155,8 +150,6 @@ docker swarm join --token SWMTKN-1-5tl7ya98erd9qtasdfml4lqbosbhfqv3asdf4p13-dzw6
 ```
 docker node ls
 ```
-它输出类似：
-
 ```s
 ID                            HOSTNAME             STATUS    AVAILABILITY    MANAGER STATUS    ENGINE VERSION
 ndcg2iavasdfrm6q2qwere2rr *   dog.example.com      Ready     Active          Leader            18.06.1-ce
@@ -164,13 +157,13 @@ ndcg2iavasdfrm6q2qwere2rr *   dog.example.com      Ready     Active          Lea
 i9ec9hjasdfaoyyjqwerr3iqa     snake.example.com    Ready     Active          Reachable         18.06.1-ce
 ```
 ### 集群部署完毕
-就是这样。
+就酱。
 
 您已经设置了一个分布式 Docker swarm 模式集群。
 
 后续文章将帮助你了解如何设置 HTTPS，您还有时间，20 分钟还没有结束。
 
-然后你可以看到如何部署 stacks 等。
+然后你可以看到如何部署`stacks`等。
 
 你已经完成了困难的部分，剩下的很容易。
 
