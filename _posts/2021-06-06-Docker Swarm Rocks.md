@@ -8,9 +8,7 @@ tags:
 ---
 
 Docker 是构建 Linux 容器的绝佳工具（“事实上的”标准）。
-
 而 Docker-Compose 是以可复制的方式在本地进行开发的工具。
-
 Docker Swarm 模式则是同 Docker-Compose 在本地使用的相同格式的文件，而在分布式集群中将应用程序堆栈部署到生产环境的一种方案。
 
 因此，使用 Docker Swarm 模式的几个好处：
