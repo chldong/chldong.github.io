@@ -157,7 +157,7 @@ docker node ls
 ```
 它输出类似：
 
-```
+```s
 ID                            HOSTNAME             STATUS    AVAILABILITY    MANAGER STATUS    ENGINE VERSION
 ndcg2iavasdfrm6q2qwere2rr *   dog.example.com      Ready     Active          Leader            18.06.1-ce
 3jrutmd3asdf1ombqwerr9svk     cat.example.com      Ready     Active          Reachable         18.06.1-ce
