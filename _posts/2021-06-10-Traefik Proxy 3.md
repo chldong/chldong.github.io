@@ -95,7 +95,7 @@ export HASHED_PASSWORD=$(openssl passwd -apr1)
 echo $HASHED_PASSWORD
 ```
 
-创建 Docker Compose 文件
+创建
 ---
 
 *   下载文件`traefik.yml`：
