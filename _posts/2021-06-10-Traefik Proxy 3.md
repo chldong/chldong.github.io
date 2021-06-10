@@ -7,13 +7,13 @@ tags:
     - 培训
 ---
 
-如果，您已经按照[项目基础知识培训二中的](/2021/06/06/Docker-Swarm-2/)描述设置了一个**Docker Swarm 模式**集群。
+如果，您已经按照[项目基础知识培训二](/2021/06/06/Docker-Swarm-2/)中的描述设置了一个**Docker Swarm**集群。
 
 现在你可以添加一个[**Traefik**](https://traefik.io/)用来：
 
 *   处理**连接**。
 *   根据域名**公开**特定服务和应用程序。
-*   处理**多个域**（如果需要）。类似于“虚拟主机”。
+*   处理**多个域**（如果需要）。它类似于“虚拟主机”。
 *   处理**HTTPS**。
 *   使用[Let's Encrypt](https://letsencrypt.org/)**自动**获取（生成）**HTTPS 证书**（包括续订）。
 *   为您需要保护且没有自身安全性的任何服务添加 HTTP**基本**身份**验证**等。
@@ -24,15 +24,15 @@ tags:
 介绍
 ---
 
-这个想法是，有一个主要的负载均衡器/代理来覆盖所有的 Docker Swarm 集群并处理每个域的 HTTPS 证书和请求。
+这个想法是，用一个负载均衡/代理来覆盖所有的 Docker Swarm 集群，并处理每个域的 HTTPS 证书和请求。
 
 但是这样做的方式允许您在每个堆栈中拥有其他 Traefik 服务而不会相互干扰，基于同一堆栈中的路径进行重定向（例如，一个`/`用于 Web 前端的容器句柄和`/api`用于同一 API 下的另一个句柄），或者有选择地从 HTTP 重定向到 HTTPS。
 
 准备
 ---
 
-*   通过 SSH 连接到集群中将拥有 Traefik 服务的管理器节点（您可能只有一个节点）。
-*   创建一个将与 Traefik 和应该可以从外部访问的容器共享的网络，使用：
+*   通过 SSH 连接到集群中用来安装 Traefik 服务的管理器节点（您可能只有一个节点）。
+*   创建一个 Traefik 专用网络，使它可以从外部网络访问容器共享的网络，如下：
 
 ```
 docker network create  --driver=overlay traefik-public
@@ -56,7 +56,7 @@ docker node update --label- add traefik- public .traefik- public - certificates 
 export EMAIL=admin@example.com
 ```
 
-*   使用要用于 Traefik UI（用户界面）的域创建一个环境变量，例如：
+*   使用要用于 Traefik UI（用户界面）的域名创建一个环境变量，例如：
 
 ```
 export DOMAIN=traefik.sys.example.com
@@ -64,12 +64,12 @@ export DOMAIN=traefik.sys.example.com
 
 *   您将在此域中访问 Traefik 仪表板，例如`traefik.sys.example.com`. 因此，请确保您的 DNS 记录将域指向集群的 IP 之一。如果它是 Traefik 服务运行的 IP（您当前连接到的管理器节点），则更好。
     
-*   使用用户名创建一个环境变量（您将在 Traefik 和 Consul UI 的 HTTP 基本身份验证中使用它），例如：
+*   创建一个用户名环境变量（您将在 Traefik 和 Consul UI 的 HTTP 基本身份验证中使用它），例如：
     
 ```s
 export USERNAME=admin
 ```
-*   使用密码创建一个环境变量，例如：
+*   创建一个密码环境变量，例如：
 
 ```
 export PASSWORD=changethis
@@ -81,13 +81,13 @@ export PASSWORD=changethis
 export HASHED_PASSWORD=$(openssl passwd -apr1 $PASSWORD)
 ```
 
-**（可选）**：或者，如果您不想将密码放在环境变量中，您可以交互输入，例如：
+**（可选）**：或者，如果您不想将密码放在环境变量中，您想交互输入，例如：
 
 ```
 export HASHED_PASSWORD=$(openssl passwd -apr1)
 ```
 
-*   您可以通过以下方式检查内容：
+*   您可以通过以下方式检查以上变量的内容：
 
 它看起来像：
 
@@ -110,7 +110,7 @@ curl -L dockerswarm.rocks/traefik.yml -o traefik.yml
 nano traefik.yml
 ```
 
-*   并复制里面的内容：
+*   并复制下面的内容：
 
 ```
 version: '3.3'
@@ -217,7 +217,7 @@ networks:
 ```
 这只是一个标准的 Docker Compose 文件。
 
-这是常见的命名文件`docker-compose.yml`或`docker-compose.traefik.yml`。
+可使用常见的命名文件`docker-compose.yml`或`docker-compose.traefik.yml`。
 
 这里命名为`traefik.yml`是为了简洁。
 ```
@@ -258,26 +258,26 @@ docker service logs traefik_traefik
 
 运行完成后，Traefik 将获取 Web 用户界面 (UI) 的 HTTPS 证书。
 
-您将能够`https://traefik.<your domain>`使用创建的用户名和密码安全地访问 Web UI 。
+您将能够直接访问`https://traefik.<your domain>`，并使用上面创建的用户名和密码安全地访问 Web UI 。
 
-部署堆栈后，您将能够在那里看到它，并了解不同的主机和路径如何映射到不同的 Docker 服务/容器。
+部署堆栈后，您将看到它，并了解不同的主机和路径如何映射到不同的 Docker 服务/容器。
 
 获取客户端IP
 ---
 
 如果您需要使用Traefik 提供的`X-Forwarded-For`或`X-Real-IP`标头读取应用程序/堆栈中的客户端 IP ，则需要让 Traefik 直接侦听，而不是通过 Docker Swarm 模式，即使在使用 Docker Swarm 模式部署时也是如此。
 
-为此，您需要使用“主机”模式发布端口。
+为此，您需要使用“host”模式发布端口。
 
-因此，Docker Compose 行：
+因此，Docker Compose 文件内需要把：
 
-···
+```
     ports:
       - 80:80
       - 443:443
-···
+```
 
-需要：
+修改成：
 
 ```
     ports:
@@ -289,13 +289,13 @@ docker service logs traefik_traefik
         mode: host
 ```
 
-您可以使用上述所有相同的说明，下载主机模式文件：
+您可以直接下载主机模式文件：
 
 ```
 curl -L dockerswarm.rocks/traefik-host.yml -o traefik-host.yml
 ```
 
-或者，直接复制它：
+或者，复制它：
 
 ```
 version: '3.3'
@@ -402,22 +402,13 @@ networks:
     external: true
 ```
 
-然后部署：
+然后进行部署：
 
 ```
 docker stack deploy -c traefik-host.yml traefik
 ```
 
-Let's Encrypt
----
-
-DockerSwarm.rocks 中有一个指南，用于设置 Traefik 和 Consul 以分布式方式存储 Let's Encrypt 证书。
-
-然而，该技术是脆弱的并且容易出错。因此，Traefik 团队在 Traefik 版本 2 中禁用了该功能。
-
-在许多情况下，这里描述的技术应该足够了。但是，如果您有一个庞大而复杂的系统，需要 Traefik 的分布式 Let's Encrypt 存储，您应该检查支持它的[Traefik Enterprise Edition](https://containo.us/traefikee/)。
-
-下一步
+后面的课程介绍
 ---
 
 接下来是使用这个 Docker Swarm 模式集群部署一个堆栈（一个完整的 Web 应用程序，具有后端、前端、数据库等）。
