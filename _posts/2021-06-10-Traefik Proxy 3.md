@@ -7,7 +7,7 @@ tags:
     - 培训
 ---
 
-如果，您已经按照[项目基础知识培训二中的](/2021/06/06/Docker-Swarm-1/)描述设置了一个**Docker Swarm 模式**集群。
+如果，您已经按照[项目基础知识培训二中的](/2021/06/06/Docker-Swarm-2/)描述设置了一个**Docker Swarm 模式**集群。
 
 现在你可以添加一个[**Traefik**](https://traefik.io/)用来：
 
