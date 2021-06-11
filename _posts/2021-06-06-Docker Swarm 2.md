@@ -73,7 +73,7 @@ Docker Swarm 模式可与`上述备选方案`相媲美。
 * 部署最新的 Ubuntu LTS（“长期支持”）版本。本文使用 Ubuntu 18.04
 * 通过 SSH 连接到它，例如：
 
-```s
+```shell
 ssh root@172.173.174.175
 ```
 
@@ -81,13 +81,13 @@ ssh root@172.173.174.175
 * 确保子域名 DNS 记录指向您的 VPS 的 IP 地址。
 * 使用主机名创建一个临时环境变量以供稍后使用，例如：
 
-```s
+```shell
 export USE_HOSTNAME=dog.example.com
 ```
 
 * 设置服务器hostname：
 
-```s
+```shell
 # Set up the server hostname
 echo $USE_HOSTNAME > /etc/hostname
 hostname -F /etc/hostname
@@ -97,7 +97,7 @@ hostname -F /etc/hostname
 
 * 更新包：
 
-```s
+```shell
 # Install the latest updates
 apt-get update
 apt-get upgrade -y
@@ -106,7 +106,7 @@ apt-get upgrade -y
 * 按照官方指南安装 Docker ...
 * ...或者，运行官方的快速脚本：
 
-```s
+```shell
 # Download Docker
 curl -fsSL get.docker.com -o get-docker.sh
 # Install Docker using the stable channel (instead of the default "edge")
@@ -126,7 +126,7 @@ rm get-docker.sh
 
 * 在主管理节点上，运行：
 
-```s
+```shell
 docker swarm init
 ```
 
@@ -138,33 +138,33 @@ Error response from daemon: could not choose an IP address to advertise since th
 
 ...使用外网 IP（例如138.68.58.48在本例中），然后再次运行命令并增加 --advertise-addr，例如：
 
-```s
+```shell
 docker swarm init --advertise-addr 138.68.58.48
 ```
 
 * 添加管理节点（可选）
 在主管理器节点上，对于要设置的每个附加管理器节点，运行：
 
-```s
+```shell
 docker swarm join-token manager
 ```
 
 * 复制结果并将其粘贴到附加管理器节点的终端中，它将类似于：
 
-```s
+```shell
  docker swarm join --token SWMTKN-1-5tl7yaasdfd9qt9j0easdfnml4lqbosbasf14p13-f3hem9ckmkhasdf3idrzk5gz 172.173.174.175:2377
  ```
 
 * 添加工作节点（可选）
 在主管理器节点上，对于要设置的每个附加工作节点，运行：
 
-```s
+```shell
 docker swarm join-token worker
 ```
 
 复制结果并将其粘贴到附加工作节点的终端中，它将类似于：
 
-```s
+```shell
 docker swarm join --token SWMTKN-1-5tl7ya98erd9qtasdfml4lqbosbhfqv3asdf4p13-dzw6ugasdfk0arn0 172.173.174.175:2377
 ```
 
@@ -172,11 +172,11 @@ docker swarm join --token SWMTKN-1-5tl7ya98erd9qtasdfml4lqbosbhfqv3asdf4p13-dzw6
 
 * 检查集群是否已连接并设置所有节点：
 
-```s
+```shell
 docker node ls
 ```
 
-```t
+```txt
 ID                            HOSTNAME             STATUS    AVAILABILITY    MANAGER STATUS    ENGINE VERSION
 ndcg2iavasdfrm6q2qwere2rr *   dog.example.com      Ready     Active          Leader            18.06.1-ce
 3jrutmd3asdf1ombqwerr9svk     cat.example.com      Ready     Active          Reachable         18.06.1-ce

@@ -36,7 +36,7 @@ More information on [Lazy Load](http://www.appelsiini.net/projects/lazyload) pro
 You can install with [bower](http://bower.io/) or [npm](https://www.npmjs.com/).
 
 
-```sh
+```shell
 $ bower install jquery.lazyload
 $ npm install jquery-lazyload
 ```

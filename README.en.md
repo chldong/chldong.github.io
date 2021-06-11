@@ -28,32 +28,32 @@
 
 Check whether you have `Ruby 2.1.0` or higher installed:
 
-```sh
+```shell
 ruby --version
 ```
 
 Install `Bundler`:
 
-```sh
+```shell
 gem install bundler
 ```
 
 Clone NexT theme:
 
-```sh
+```shell
 git clone https://github.com/Simpleyyt/jekyll-theme-next.git
 cd jekyll-theme-next
 ```
 
 Install Jekyll and other dependencies from the GitHub Pages gem:
 
-```sh
+```shell
 bundle install
 ```
 
 Run your Jekyll site locally:
 
-```sh
+```shell
 bundle exec jekyll server
 ```
 
