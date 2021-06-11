@@ -34,31 +34,31 @@ tags:
 *   通过 SSH 连接到集群中用来安装 Traefik 服务的管理器节点（您可能只有一个节点）。
 *   创建一个 Traefik 专用网络，使它可以从外部网络访问容器共享的网络，如下：
 
-```
+```s
 docker network create  --driver=overlay traefik-public
 ```
 
 *   获取此节点的 Swarm 节点 ID 并将其存储在环境变量中：
 
-```
+```s
 export NODE_ID=$( docker info -f '{{.Swarm.NodeID}}' )
 ```
 
 *   在这个节点中创建一个标签，让 Traefik 始终部署到同一个节点并使用同一个卷：
 
-```
-docker node update --label- add traefik- public .traefik- public - certificates = true $NODE_ID
+```s
+docker node update --label-add traefik-public.traefik-public-certificates=true $NODE_ID
 ```
 
 *   使用您的电子邮件创建一个环境变量，用于生成 Let's Encrypt 证书，例如：
 
-```
+```s
 export EMAIL=admin@example.com
 ```
 
 *   使用要用于 Traefik UI（用户界面）的域名创建一个环境变量，例如：
 
-```
+```s
 export DOMAIN=traefik.sys.example.com
 ```
 
@@ -71,19 +71,19 @@ export USERNAME=admin
 ```
 *   创建一个密码环境变量，例如：
 
-```
+```s
 export PASSWORD=changethis
 ```
 
 *   使用`openssl`生成密码的“散列”版本，并将其存储在一个环境变量：
 
-```
+```s
 export HASHED_PASSWORD=$(openssl passwd -apr1 $PASSWORD)
 ```
 
 **（可选）**：或者，如果您不想将密码放在环境变量中，您想交互输入，例如：
 
-```
+```s
 export HASHED_PASSWORD=$(openssl passwd -apr1)
 ```
 
@@ -91,7 +91,7 @@ export HASHED_PASSWORD=$(openssl passwd -apr1)
 
 它看起来像：
 
-```
+```s
 echo $HASHED_PASSWORD
 ```
 
@@ -100,19 +100,19 @@ echo $HASHED_PASSWORD
 
 *   下载文件`traefik.yml`：
 
-```
+```s
 curl -L dockerswarm.rocks/traefik.yml -o traefik.yml
 ```
 
 *   ...或手动创建它，例如，使用`nano`：
 
-```
+```s
 nano traefik.yml
 ```
 
 *   并复制下面的内容：
 
-```
+```yml
 version: '3.3'
 
 services:
@@ -214,7 +214,7 @@ networks:
 ```
 
 提示：
-```
+```t
 这只是一个标准的 Docker Compose 文件。
 
 可使用常见的命名文件`docker-compose.yml`或`docker-compose.traefik.yml`。
@@ -226,7 +226,7 @@ networks:
 
 使用以下命令部署堆栈：
 
-```
+```s
 docker stack deploy -c traefik.yml traefik
 ```
 
@@ -237,19 +237,19 @@ docker stack deploy -c traefik.yml traefik
 
 *   检查堆栈是否已部署：
 
-```
+```s
 docker stack ps traefik
 ```
 *  它会输出如下内容：
 
-```
+```t
 ID             NAME                IMAGE          NODE              DESIRED STATE   CURRENT STATE          ERROR   PORTS
 w5o6fmmln8ni   traefik_traefik.1   traefik:v2.2   dog.example.com   Running         Running 1 minute ago
 ```
 
 *   您可以使用以下命令检查 Traefik 日志：
 
-```
+```s
 docker service logs traefik_traefik
 ```
 
@@ -271,7 +271,7 @@ docker service logs traefik_traefik
 
 因此，Docker Compose 文件内需要把：
 
-```
+```yaml
     ports:
       - 80:80
       - 443:443
@@ -279,7 +279,7 @@ docker service logs traefik_traefik
 
 修改成：
 
-```
+```yaml
     ports:
       - target: 80
         published: 80
@@ -291,13 +291,13 @@ docker service logs traefik_traefik
 
 您可以直接下载主机模式文件：
 
-```
+```s
 curl -L dockerswarm.rocks/traefik-host.yml -o traefik-host.yml
 ```
 
 或者，复制它：
 
-```
+```yml
 version: '3.3'
 
 services:
@@ -404,7 +404,7 @@ networks:
 
 然后进行部署：
 
-```
+```s
 docker stack deploy -c traefik-host.yml traefik
 ```
 
