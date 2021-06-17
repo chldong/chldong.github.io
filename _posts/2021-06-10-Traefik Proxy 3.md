@@ -40,7 +40,7 @@ docker network create  --driver=overlay traefik-public
 
 * 获取此节点的 Swarm 节点 ID 并将其存储在环境变量中：
 
-```shell
+```sh
 export NODE_ID=$(docker info -f '{{.Swarm.NodeID}}')
 ```
 
