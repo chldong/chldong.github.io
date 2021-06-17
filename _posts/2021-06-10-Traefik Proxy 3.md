@@ -41,7 +41,7 @@ docker network create  --driver=overlay traefik-public
 * 获取此节点的 Swarm 节点 ID 并将其存储在环境变量中：
 
 ```shell
-export NODE_ID=$( docker info -f '{{.Swarm.NodeID}}' )
+export NODE_ID=$(docker info -f '{{.Swarm.NodeID}}')
 ```
 
 * 在这个节点中创建一个标签，让 Traefik 始终部署到同一个节点并使用同一个卷：
